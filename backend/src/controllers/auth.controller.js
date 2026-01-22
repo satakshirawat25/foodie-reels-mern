@@ -64,7 +64,7 @@ export const loginUser = async (req, res) => {
     {
       id: user._id,
     },
-     process.env.JWT_SECRET
+    process.env.JWT_SECRET
   );
 
   res.cookie("token", token);
@@ -79,15 +79,15 @@ export const loginUser = async (req, res) => {
   });
 };
 
-export const logoutUser = async(req,res)=>{
+export const logoutUser = async (req, res) => {
   res.clearCookie("token");
   res.status(200).json({
-    message:"User logged out successfully"
-  })
-}
+    message: "User logged out successfully",
+  });
+};
 
 export const authController = {
   registerUser,
   loginUser,
-  logoutUser
+  logoutUser,
 };
