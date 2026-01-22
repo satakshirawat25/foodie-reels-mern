@@ -1,20 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/auth.css';
-import axios from 'axios'
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/auth.css";
+import axios from "axios";
 
 const UserRegister = () => {
+  const navigate = useNavigate();
 
-    const handleSubmt=async(e)=>{
-        e.preventDefault()
+  const handleSubmt = async (e) => {
+    e.preventDefault();
 
-        const fullName = e.target.fullName.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        // console.log(fullName)
+    const fullName = e.target.fullName.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    // console.log(fullName)
 
-        axios.post("http://localhost:3000/api/user/register")
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/user/register",
+        {
+          fullName,
+          email,
+          password,
+        },{
+            withCredentials:true
+        }
+      );
+      console.log(response.data);
+      navigate("/");
+    } catch (error) {
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
     }
+  };
   return (
     <div className="auth-container">
       <div className="auth-wrapper">
@@ -25,7 +44,9 @@ const UserRegister = () => {
 
         <form className="auth-form" onSubmit={handleSubmt}>
           <div className="form-group">
-            <label htmlFor="fullname" className="form-label">FullName</label>
+            <label htmlFor="fullname" className="form-label">
+              FullName
+            </label>
             <input
               type="text"
               id="fullname"
@@ -36,20 +57,26 @@ const UserRegister = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email" className="form-label">Email</label>
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
             <input
               type="email"
               id="email"
+              name="email"
               className="form-input"
               placeholder="Enter your email"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <input
               type="password"
               id="password"
+              name="password"
               className="form-input"
               placeholder="Create a strong password"
             />
@@ -66,13 +93,10 @@ const UserRegister = () => {
           </div> */}
 
           <div className="checkbox-group">
-            <input
-              type="checkbox"
-              id="terms"
-              className="form-checkbox"
-            />
+            <input type="checkbox" id="terms" className="form-checkbox" />
             <label htmlFor="terms" className="checkbox-label">
-              I agree to the <Link to="#">Terms of Service</Link> and <Link to="#">Privacy Policy</Link>
+              I agree to the <Link to="#">Terms of Service</Link> and{" "}
+              <Link to="#">Privacy Policy</Link>
             </label>
           </div>
 
@@ -87,7 +111,7 @@ const UserRegister = () => {
 
         <div className="auth-switcher">
           <div className="auth-switcher-label">
-            Are you a food partner?{' '}
+            Are you a food partner?{" "}
             <Link to="/food-partner/register" className="auth-switcher-link">
               Register here
             </Link>

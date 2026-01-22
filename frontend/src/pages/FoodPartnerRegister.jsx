@@ -1,8 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
+import axios from "axios";
 
 const FoodPartnerRegister = () => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const businessName = e.target.businessName.value;
+    const contactName = e.target.contactName.value;
+    const phone = e.target.phone.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const address = e.target.address.value;
+
+    try {
+      const response = await axios.post(
+        "/api/foodPartner/food-partner/register",
+        {
+          name: businessName,
+          contactName,
+          phone,
+          email,
+          password,
+          address,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      navigate("/create-food");
+    } catch (error) {
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-wrapper">
@@ -13,7 +48,7 @@ const FoodPartnerRegister = () => {
           </p>
         </div>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="business-name" className="form-label">
               Business Name
@@ -21,6 +56,7 @@ const FoodPartnerRegister = () => {
             <input
               type="text"
               id="business-name"
+              name="businessName"
               className="form-input"
               placeholder="Enter your restaurant name"
             />
@@ -33,6 +69,7 @@ const FoodPartnerRegister = () => {
             <input
               type="text"
               id="contact-name"
+              name="contactName"
               className="form-input"
               placeholder="Enter contact person's name"
             />
@@ -45,6 +82,7 @@ const FoodPartnerRegister = () => {
             <input
               type="tel"
               id="phone"
+              name="phone"
               className="form-input"
               placeholder="Enter phone number"
             />
@@ -57,6 +95,7 @@ const FoodPartnerRegister = () => {
             <input
               type="email"
               id="email"
+              name="email"
               className="form-input"
               placeholder="Enter business email"
             />
@@ -69,22 +108,24 @@ const FoodPartnerRegister = () => {
             <input
               type="text"
               id="address"
+              name="address"
               className="form-input"
               placeholder="Enter business address"
             />
           </div>
 
-          {/* <div className="form-group">
+          <div className="form-group">
             <label htmlFor="password" className="form-label">
               Password
             </label>
             <input
               type="password"
               id="password"
+              name="password"
               className="form-input"
               placeholder="Create a strong password"
             />
-          </div> */}
+          </div>
 
           <button type="submit" className="auth-button auth-button-primary">
             Register Business
@@ -97,7 +138,7 @@ const FoodPartnerRegister = () => {
 
         <div className="auth-switcher">
           <div className="auth-switcher-label">
-            Are you a regular user?{' '}
+            Are you a regular user?{" "}
             <Link to="/user/register" className="auth-switcher-link">
               Register here
             </Link>
