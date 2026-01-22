@@ -1,10 +1,12 @@
-import app from "./src/app.js"
-import connectDB from "./src/db/db.js"
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+
+// 👇 dotenv FIRST
 dotenv.config()
 
+import app from "./src/app.js";
+import connectDB from "./src/db/db.js";
 
-app.listen(3000,()=>{
-    connectDB()
-    console.log(`server running at 3000`)
-})
+app.listen(3000, () => {
+  connectDB();
+  console.log("Server running at 3000");
+});
