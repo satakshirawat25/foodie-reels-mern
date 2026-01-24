@@ -1,49 +1,49 @@
 import { foodPartnerModel } from "../models/foodPartner.models.js";
-import jwt from 'jsonwebtoken'
+import { userModel } from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
-export const authFoodPartnerMiddleware = async(req,res,next)=>{
+export const authFoodPartnerMiddleware = async (req, res, next) => {
+  //token exists or not
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({
+      message: "Please login first",
+    });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const foodPartner = await foodPartnerModel.findById(decoded.id);
 
-    //token exists or not
-    const token = req.cookies.token
-    if(!token){
-        return res.status(401).json({
-            message:"Please login first"
-        })
-    }
-    try{
-       const decoded =  jwt.verify(token,process.env.JWT_SECRET)
-       const foodPartner = await foodPartnerModel.findById(decoded.id)
+    req.foodPartner = foodPartner;
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Invalid token",
+    });
+  }
+};
 
-       req.foodPartner = foodPartner
-       next()
-    }catch(err){
-        return res.status(401).json({
-            message:"Invalid token"
-        })
-    }
-}
+export const authUserMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({
+      message: "Please login first",
+    });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await userModel.findById(decoded.id);
 
-export const authUserMiddleware = async(req,res,next)=>{
-    const token = req.cookies.token
-    if(!token){
-        return res.status(401).json({
-            message:"Please login first"
-        } )
-    }
-    try{
-       const decoded =  jwt.verify(token,process.env.JWT_SECRET)
-       const foodPartner = await foodPartnerModel.findById(decoded.id)
-
-       req.foodPartner = foodPartner
-       next()
-    }catch(err){
-        return res.status(401).json({
-            message:"Invalid token"
-        })
-    }
-}
+    req.user = user;
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Invalid token",
+    });
+  }
+};
 
 export const authMiddleware = {
-    authFoodPartnerMiddleware,
-    authUserMiddleware
-}
+  authFoodPartnerMiddleware,
+  authUserMiddleware,
+};

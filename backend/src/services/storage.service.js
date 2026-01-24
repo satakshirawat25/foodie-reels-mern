@@ -35,9 +35,9 @@ export const uploadFile = async (file, fileName) => {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
   });
 
-  console.log("PUBLIC:", process.env.IMAGEKIT_PUBLIC_KEY);
-console.log("PRIVATE:", process.env.IMAGEKIT_PRIVATE_KEY);
-console.log("ENDPOINT:", process.env.IMAGEKIT_URL_ENDPOINT);
+//   console.log("PUBLIC:", process.env.IMAGEKIT_PUBLIC_KEY);
+// console.log("PRIVATE:", process.env.IMAGEKIT_PRIVATE_KEY);
+// console.log("ENDPOINT:", process.env.IMAGEKIT_URL_ENDPOINT);
 
 
   try {

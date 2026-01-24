@@ -7,6 +7,9 @@ import { v4 as uuid } from "uuid";
 
 export const createFood = async (req, res) => {
 
+    console.log(req.file);
+    console.log(req.body)
+    
      const ext = req.file.originalname.split(".").pop();
 
 
