@@ -1,12 +1,13 @@
-import express from 'express'
-import { foodPartnerController } from '../controllers/food-partner.controller.js'
-import { authMiddleware } from '../middlewares/auth.middleware.js'
+import express from "express";
+import { foodPartnerController } from "../controllers/food-partner.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/food-partner/:id",
-    authMiddleware.authUserMiddleware,
-    foodPartnerController.getFoodPartnerById
-  )
+router.get(
+  "/:id",
+  authMiddleware.authUserMiddleware,
+  foodPartnerController.getFoodPartnerById
+);
 
-export default router
+export default router;
