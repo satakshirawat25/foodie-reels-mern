@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import foodRoutes from './routes/food.routes.js'
 import cors from "cors";
+import  foodPartnerRoutes from './routes/food-partner.routes.js'
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/food",foodRoutes)
+app.use('/api/food-partner',foodPartnerRoutes)
 
 export default app;
 

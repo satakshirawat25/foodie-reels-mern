@@ -22,4 +22,6 @@ router.get("/",
    authMiddleware.authUserMiddleware,
   foodController.getFoodItems);
 
+  
+
 export default router;

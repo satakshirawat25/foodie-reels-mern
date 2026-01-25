@@ -1,371 +1,265 @@
-// // import React, { useState, useEffect, useRef } from "react";
-// -// import "../../styles/reels.css";
-// -// import axios from "axios";
-// -// import { useNavigate } from "react-router-dom";
-// -
-// -// const Home = () => {
-// -//   const [reels, setReels] = useState([]);
-// -//   const [loading, setLoading] = useState(true);
-// -//   const [error, setError] = useState(null);
-// -//   const videoRefs = useRef([]);
-// -//   const navigate = useNavigate();
-// -
-// -//   // Fetch reels data from API
-// -//   useEffect(() => {
-// -//     const fetchReels = async () => {
-// -//       try {
-// -//         const response = await axios.get("/api/food/reels", {
-// -//           withCredentials: true,
-// -//         });
-// -//         setReels(response.data);
-// -//       } catch (err) {
-// -//         console.error("Error fetching reels:", err);
-// -//         setError("Failed to load reels");
-// -//         // Fallback to sample data if API fails
-// -//         setReels([
-// -//           {
-// -//             id: 1,
-// -//             videoUrl:
-// -//               "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -//             description:
-// -//               "Delicious homemade pizza with fresh mozzarella and basil. Perfect for dinner!",
-// -//             storeName: "Pizza Palace",
-// -//             storeId: 1,
-// -//           },
-// -//           {
-// -//             id: 2,
-// -//             videoUrl:
-// -//               "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -//             description:
-// -//               "Authentic Indian curry with aromatic spices and creamy sauce.",
-// -//             storeName: "Spice House",
-// -//             storeId: 2,
-// -//           },
-// -//           {
-// -//             id: 3,
-// -//             videoUrl:
-// -//               "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -//             description:
-// -//               "Crispy fried chicken with golden skin. Order now for delivery!",
-// -//             storeName: "Fried Paradise",
-// -//             storeId: 3,
-// -//           },
-// -//           {
-// -//             id: 4,
-// -//             videoUrl:
-// -//               "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -//             description:
-// -//               "Fresh sushi rolls with premium ingredients and authentic preparation.",
-// -//             storeName: "Sushi Master",
-// -//             storeId: 4,
-// -//           },
-// -//           {
-// -//             id: 5,
-// -//             videoUrl:
-// -//               "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -//             description:
-// -//               "Artisanal pastries and cakes baked fresh daily. Visit us today!",
-// -//             storeName: "Sweet Bakery",
-// -//             storeId: 5,
-// -//           },
-// -//         ]);
-// -//       } finally {
-// -//         setLoading(false);
-// -//       }
-// -//     };
-// -
-// -//     fetchReels();
-// -//   }, []);
-// -
-// -//   // Intersection Observer for auto-playing videos
-// -//   useEffect(() => {
-// -//     const observer = new IntersectionObserver(
-// -//       (entries) => {
-// -//         entries.forEach((entry) => {
-// -//           const video = entry.target;
-// -//           if (entry.isIntersecting) {
-// -//             video.play().catch((err) => console.log("Video play failed:", err));
-// -//           } else {
-// -//             video.pause();
-// -//           }
-// -//         });
-// -//       },
-// -//       { threshold: 0.5 }
-// -//     );
-// -
-// -//     videoRefs.current.forEach((video) => {
-// -//       if (video) observer.observe(video);
-// -//     });
-// -
-// -//     return () => {
-// -//       videoRefs.current.forEach((video) => {
-// -//         if (video) observer.unobserve(video);
-// -//       });
-// -//     };
-// -//   }, [reels]);
-// -
-// -//   const handleVisitStore = (storeId, storeName) => {
-// -//     // Navigate to store page
-// -//     navigate(`/store/${storeId}`);
-// -//   };
-// -
-// -//   return (
-// -//     <div className="reels-container">
-// -//       {reels.map((reel) => (
-// -//         <div key={reel.id} className="reel">
-// -//           <video
-// -//             className="reel-video"
-// -//             src={reel.videoUrl}
-// -//             loop
-// -//             muted
-// -//             autoPlay={reel.id === 1}
-// -//             playsInline
-// -//           />
-// -
-// -//           {/* Gradient overlay for text readability */}
-// -//           <div className="reel-gradient-overlay" />
-// -
-// -//           {/* Content overlay */}
-// -//           <div className="reel-overlay">
-// -//             <p className="reel-description">{reel.description}</p>
-// -//             <button
-// -//               className="reel-button"
-// -//               onClick={() => handleVisitStore(reel.storeId, reel.storeName)}
-// -//             >
-// -//               Visit Store
-// -//             </button>
-// -//           </div>
-// -//         </div>
-// -//       ))}
-// -//     </div>
-// -//   );
-// -// };
-// -
-// -// export default Home;
-// -
-// import { useEffect, useRef, useState } from "react";
+// // @refresh reset
+// import React, { useState, useRef, useEffect } from "react";
+// import "../../styles/home.css";
 // import axios from "axios";
-// -z
-// -const Home = () => {
-// -  const [videos, setVideos] = useState([]);
-// -  const videoRefs = useRef(new Map());
-// -  const containerRef = useRef(null);
-// -
-// -  useEffect(() => {
-// -    const observer = new IntersectionObserver(
-// -      (entries) => {
-// -        entries.forEach((entry) => {
-// -          const video = entry.target;
-// -
-// -          // Safety check
-// -          if (!(video instanceof HTMLVideoElement)) return;
-// -
-// -          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-// -            // Play visible video
-// -            video.play().catch(() => {
-// -              // Ignore autoplay errors
-// -            });
-// -          } else {
-// -            // Pause non-visible video
-// -            video.pause();
-// -          }
-// -        });
-// -      },
-// -      {
-// -        threshold: 0.6,
-// -      }
-// -    );
-// -
-// -    // Observe all videos
-// -    videoRefs.current.forEach((video) => {
-// -      if (video) observer.observe(video);
-// -    });
-// -
-// -    return () => {
-// -      observer.disconnect();
-// -    };
-// -  }, [videos]);
-// -
-// -  // Fetch videos from backend
-// -  useEffect(() => {
-// -    axios
-// -      .get("/api/food", { withCredentials: true })
-// -      .then((response) => {
-// -        setVideos(response.data.foodItems);
-// -      })
-// -      .catch((error) => {
-// -        console.error("Error fetching videos:", error);
-// -        // Fallback to sample data if API fails
-// -        setVideos([
-// -          {
-// -            _id: 1,
-// -            video:
-// -              "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -            description:
-// -              "Delicious homemade pizza with fresh mozzarella and basil. Perfect for dinner!",
-// -            foodPartner: "/store/1",
-// -          },
-// -          {
-// -            _id: 2,
-// -            video:
-// -              "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -            description:
-// -              "Authentic Indian curry with aromatic spices and creamy sauce.",
-// -            foodPartner: "/store/2",
-// -          },
-// -          {
-// -            _id: 3,
-// -            video:
-// -              "https://ik.imagekit.io/d6iftzltud/f4ea1d85-440e-4939-a299-86714d1f3e64_hljTKB6O_.mp4",
-// -            description:
-// -              "Crispy fried chicken with golden skin. Order now for delivery!",
-// -            foodPartner: "/store/3",
-// -          },
-// -        ]);
-// -      });
-// -  }, []);
-// -
-// -  // Store video refs
-// -  const setVideoRef = (id) => (el) => {
-// -    if (el) {
-// -      videoRefs.current.set(id);
-// -    } else {
-// -      videoRefs.current.delete(id);
-// -      return;
-// -    }
-// -    videoRefs.current.set(id, el);
-// -  };
-// -
-// -  return (
-// -    <div ref={containerRef} className="reels-page">
-// -      <div className="reels-feed" role="list">
-// -        {videos.map((item) => (
-// -          <section key={item._id} className="reel" role="listitem">
-// -            <video
-// -              ref={setVideoRef(item._id)}
-// -              className="reel-video"
-// -              src={item.video}
-// -              muted
-// -              playsInline
-// -              loop
-// -              preload="metadata"
-// -            />
-// -
-// -            <div className="reel-overlay">
-// -              <div className="reel-overlay-gradient" aria-hidden="true" />
-// -
-// -              <div className="reel-content">
-// -                <p className="reel-description" title={item.description}>
-// -                  {item.description}
-// -                </p>
-// -
-// -                <Link
-// -                  className="reel-btn"
-// -                  to={item.foodPartner}
-// -                  aria-label="Visit store"
-// -                >
-// -                  Visit Store
-// -                </Link>
-// -              </div>
-// -            </div>
-// -          </section>
-// -        ))}
-// -      </div>
-// -    </div>
-// -  );
-// -};
-// -
-// -export default Home;
+// import { Link } from "react-router-dom";
 
-import React, { useEffect, useRef, useState } from "react";
+// const Home = ({ videos = [] }) => {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const scrollContainerRef = useRef(null);
+//   const isScrolling = useRef(false);
+
+//   // Mock data if no videos provided
+//   // const mockVideos =
+//   //   videos.length > 0
+//   //     ? videos
+//   //     : [
+//   //         {
+//   //           id: 1,
+//   //           videoUrl: "https://ik.imagekit.io/d6iftzltud/dad63ed8-d771-4a68-971f-39e2bff26e50_h8bZZ-Gtd.mp4",
+//   //           description:
+//   //             "Delicious homemade pizza with fresh mozzarella and organic tomatoes",
+//   //           storeUrl: "/create-food",
+//   //           storeId: 1,
+//   //         },
+//   //         {
+//   //           id: 2,
+//   //           videoUrl: "https://ik.imagekit.io/d6iftzltud/dad63ed8-d771-4a68-971f-39e2bff26e50_h8bZZ-Gtd.mp4",
+//   //           description:
+//   //             "Fresh sushi rolls made with premium ingredients and fresh fish",
+//   //            storeUrl: "/create-food",
+//   //           storeId: 2,
+//   //         },
+//   //         {
+//   //           id: 3,
+//   //           videoUrl: "https://ik.imagekit.io/d6iftzltud/dad63ed8-d771-4a68-971f-39e2bff26e50_h8bZZ-Gtd.mp4",
+//   //           description:
+//   //             "Crispy fried chicken with special seasoning and sauce",
+//   //           storeUrl: "/create-food",
+//   //           storeId: 3,
+//   //         },
+//   //       ];
+
+//   const handleScroll = (e) => {
+//     if (isScrolling.current) return;
+
+//     const container = scrollContainerRef.current;
+//     const scrollTop = container.scrollTop;
+//     const itemHeight = container.clientHeight;
+
+//     // Detect scroll direction
+//     const delta = scrollTop % itemHeight;
+
+//     if (delta > itemHeight / 3) {
+//       // Snap to next
+//       setCurrentIndex((prev) => Math.min(prev + 1, mockVideos.length - 1));
+//     } else {
+//       // Snap to current
+//       setCurrentIndex((prev) => Math.max(prev - 1, 0));
+//     }
+//   };
+
+//   useEffect(() => {
+//     const container = scrollContainerRef.current;
+//     if (!container) return;
+
+//     isScrolling.current = true;
+//     const targetScroll = currentIndex * container.clientHeight;
+
+//     container.scrollTo({
+//       top: targetScroll,
+//       behavior: "smooth",
+//     });
+
+//     const timer = setTimeout(() => {
+//       isScrolling.current = false;
+//     }, 600);
+
+//     return () => clearTimeout(timer);
+//   }, [currentIndex]);
+
+//   const handleVisitStore = (storeId) => {
+//     console.log("Visit store:", storeId);
+//     // Navigate to store or open store details
+//   };
+
+
+//   useEffect(()=>{
+//     axios.get("http://localhost:3000/api/food",{withCredentials:true})
+//     .then(response=>{
+//       setVideos(response.data)
+//     })
+//   })
+
+//   return (
+//     <div className="reel-feed-container">
+//       <div
+//         className="reel-scroll-container"
+//         ref={scrollContainerRef}
+//         onScroll={handleScroll}
+//       >
+//         {mockVideos.map((video) => (
+//           <div key={video._id} className="reel-item">
+//             <video
+//               className="reel-video"
+//               autoPlay={mockVideos.indexOf(video) === currentIndex}
+//               loop
+//               muted
+//               playsInline
+//             >
+//               <source src={video.videoUrl} type="video/mp4" />
+//               Your browser does not support the video tag.
+//             </video>
+
+//             {/* Overlay: Description and Button */}
+//             <div className="reel-overlay">
+//               <div className="reel-content">
+//                 <p className="reel-description">{video.description}</p>
+//                 <Link
+//                   className="visit-store-btn"
+//                   to={"/food-partner/" + item.foodPartner} aria-label="Visit store">
+//                   {/* // onClick={() => handleVisitStore(video.storeId)} */}
+                
+                 
+//                 </Link>
+                
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Indicators */}
+//       <div className="reel-indicators">
+//         {mockVideos.map((_, index) => (
+//           <div
+//             key={index}
+//             className={`indicator ${index === currentIndex ? "active" : ""}`}
+//             onClick={() => setCurrentIndex(index)}
+//           />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Home;
+
+
+
+
+
+// @refresh reset
+import React, { useState, useRef, useEffect } from "react";
+import "../../styles/home.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
-  const videoRefs = useRef(new Map());
-  const containerRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch videos from backend
+  const scrollContainerRef = useRef(null);
+  const isScrolling = useRef(false);
 
-  // Intersection Observer for autoplay
+  /* =======================
+     FETCH VIDEOS FROM BACKEND
+     ======================= */
   useEffect(() => {
-    if (!videos.length) return;
+    axios
+      .get("http://localhost:3000/api/food", { withCredentials: true })
+      .then((response) => {
+        // IMPORTANT: backend usually returns { success, data }
+        // console.log("Response from backend:", response);
+        setVideos(response.data.foodItems || []);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch videos:", error);
+      });
+  }, []);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
+  /* =======================
+     HANDLE SCROLL SNAP
+     ======================= */
+  const handleScroll = () => {
+    if (isScrolling.current) return;
 
-          if (!(video instanceof HTMLVideoElement)) return;
+    const container = scrollContainerRef.current;
+    const scrollTop = container.scrollTop;
+    const itemHeight = container.clientHeight;
 
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-            video.play().catch(() => {
-              // Ignore autoplay errors
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    videoRefs.current.forEach((video) => {
-      if (video) observer.observe(video);
-    });
-
-    return () => observer.disconnect();
-  }, [videos]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3000/api/food").then((response) => {
-      setVideos(response.data.foodItems);
-    });
-  });
-
-  // Store video refs
-  const setVideoRef = (id) => (el) => {
-    if (el) {
-      videoRefs.current.set(id, el);
-    } else {
-      videoRefs.current.delete(id);
-    }
+    const index = Math.round(scrollTop / itemHeight);
+    setCurrentIndex(index);
   };
 
+  /* =======================
+     SNAP TO CURRENT VIDEO
+     ======================= */
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    isScrolling.current = true;
+
+    container.scrollTo({
+      top: currentIndex * container.clientHeight,
+      behavior: "smooth",
+    });
+
+    const timer = setTimeout(() => {
+      isScrolling.current = false;
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
+
   return (
-    <div ref={containerRef} className="reels-page">
-      <div className="reels-feed" role="list">
-        {videos.map((item) => (
-          <section key={item._id} className="reel" role="listitem">
+    <div className="reel-feed-container">
+      <div
+        className="reel-scroll-container"
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+      >
+        {videos.map((video, index) => (
+          <div key={video._id} className="reel-item">
             <video
-              ref={setVideoRef(item._id)}
+            //  ref={(el) => (videos.current[index] = el)}
               className="reel-video"
-              src={item.video}
+              // src={video.videoUrl}
+              src={video.video}
+              autoPlay
+              loop
               muted
               playsInline
-              loop
-              preload="metadata"
             />
 
+            {/* Overlay */}
             <div className="reel-overlay">
-              <div className="reel-overlay-gradient" aria-hidden="true" />
-
               <div className="reel-content">
-                <p className="reel-description" title={item.description}>
-                  {item.description}
-                </p>
+                <p className="reel-description">{video.description}</p>
 
                 <Link
-                  className="reel-btn"
-                  to={`/food-partner/${item.foodPartner}`}
-                  aria-label="Visit store"
+                  className="visit-store-btn"
+                  to={"/food-partner/" + video.foodPartner}
                 >
                   Visit Store
                 </Link>
               </div>
             </div>
-          </section>
+          </div>
+        ))}
+      </div>
+
+      {/* Indicators */}
+      <div className="reel-indicators">
+        {videos.map((_, index) => (
+          <div
+            key={index}
+            className={`indicator ${
+              index === currentIndex ? "active" : ""
+            }`}
+            onClick={() => setCurrentIndex(index)}
+          />
         ))}
       </div>
     </div>
@@ -373,3 +267,4 @@ const Home = () => {
 };
 
 export default Home;
+

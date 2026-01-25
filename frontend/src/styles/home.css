@@ -1,0 +1,186 @@
+/* Reel Feed Container */
+.reel-feed-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Scroll Container with Snap */
+.reel-scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-padding: 0;
+}
+
+/* Hide scrollbar */
+.reel-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.reel-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Individual Reel Item */
+.reel-item {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+}
+
+/* Video Element */
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay Container */
+.reel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.2),
+    transparent
+  );
+  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg)
+    var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  z-index: 10;
+}
+
+/* Content Wrapper */
+.reel-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Description Text */
+.reel-description {
+  color: var(--bg-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Visit Store Button */
+.visit-store-btn {
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  width: fit-content;
+  min-width: 120px;
+  text-align: center;
+}
+
+.visit-store-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.visit-store-btn:active {
+  transform: translateY(0);
+}
+
+/* Indicators */
+.reel-indicators {
+  position: absolute;
+  right: var(--spacing-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  z-index: 20;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.indicator.active {
+  background-color: var(--primary-light);
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+}
+
+.indicator:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reel-overlay {
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md)
+      var(--spacing-md);
+  }
+
+  .reel-description {
+    font-size: var(--font-size-sm);
+  }
+
+  .visit-store-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-width: 100px;
+  }
+
+  .reel-indicators {
+    right: var(--spacing-md);
+  }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .reel-feed-container {
+    background-color: var(--bg-primary);
+  }
+
+  .visit-store-btn {
+    background-color: var(--primary-color);
+  }
+
+  .visit-store-btn:hover {
+    background-color: var(--primary-light);
+  }
+}

@@ -1,145 +1,133 @@
-// import React, { useRef, useEffect, useState } from "react";
+// import React, { useState, useRef, useEffect } from "react";
 // import "../styles/reels.css";
 
-// const ReelFeed = ({ items, onLike, onSave, emptyMessage }) => {
-//   const containerRef = useRef(null);
-//   const videoRefs = useRef({});
+// const ReelFeed = ({ videos = [] }) => {
 //   const [currentIndex, setCurrentIndex] = useState(0);
-//   const scrollTimeoutRef = useRef(null);
+//   const scrollContainerRef = useRef(null);
+//   const isScrolling = useRef(false);
 
-//   // Auto-play video when it comes into view
-//   useEffect(() => {
-//     const observer = new IntersectionObserver(
-//       (entries) => {
-    
-//         entries.forEach((entry) => {
-//           const video = entry.target;
-//           if (entry.isIntersecting) {
-//             video.play().catch(() => {
-//               // Autoplay may be prevented by browser
-//             });
-//           } else {
-//             video.pause();
-//           }
-//         });
-//       },
-//       { threshold: 0.6 }
-//     );
+//   // Mock data if no videos provided
+//   const mockVideos =
+//     videos.length > 0
+//       ? videos
+//       : [
+//           {
+//             id: 1,
+//             videoUrl: "/videos/video1.mp4",
+//             description:
+//               "Delicious homemade pizza with fresh mozzarella and organic tomatoes",
+//             storeName: "Pizza Paradise",
+//             storeId: 1,
+//           },
+//           {
+//             id: 2,
+//             videoUrl: "/videos/video2.mp4",
+//             description:
+//               "Fresh sushi rolls made with premium ingredients and fresh fish",
+//             storeName: "Sushi Master",
+//             storeId: 2,
+//           },
+//           {
+//             id: 3,
+//             videoUrl: "/videos/video3.mp4",
+//             description:
+//               "Crispy fried chicken with special seasoning and sauce",
+//             storeName: "Fried Chicken House",
+//             storeId: 3,
+//           },
+//         ];
 
-//     Object.values(videoRefs.current).forEach((video) => {
-//       if (video) observer.observe(video);
-//     });
+//   const handleScroll = (e) => {
+//     if (isScrolling.current) return;
 
-//     return () => {
-//       Object.values(videoRefs.current).forEach((video) => {
-//         if (video) observer.unobserve(video);
-//       });
-//     };
-//   }, [items]);
-
-//   // Handle scroll snapping
-//   const handleScroll = () => {
-//     if (!containerRef.current) return;
-
-//     const container = containerRef.current;
+//     const container = scrollContainerRef.current;
 //     const scrollTop = container.scrollTop;
-//     const clientHeight = container.clientHeight;
+//     const itemHeight = container.clientHeight;
 
-//     // Calculate which reel is currently visible
-//     const newIndex = Math.round(scrollTop / clientHeight);
-//     setCurrentIndex(Math.min(newIndex, items.length - 1));
+//     // Detect scroll direction
+//     const delta = scrollTop % itemHeight;
 
-//     // Clear existing timeout
-//     if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-
-//     // Set timeout to snap after scroll ends
-//     scrollTimeoutRef.current = setTimeout(() => {
-//       handleScrollEnd();
-//     }, 150);
+//     if (delta > itemHeight / 3) {
+//       // Snap to next
+//       setCurrentIndex((prev) => Math.min(prev + 1, mockVideos.length - 1));
+//     } else {
+//       // Snap to current
+//       setCurrentIndex((prev) => Math.max(prev - 1, 0));
+//     }
 //   };
 
-//   // Snap to reel on scroll end
-//   const handleScrollEnd = () => {
-//     if (!containerRef.current) return;
+//   useEffect(() => {
+//     const container = scrollContainerRef.current;
+//     if (!container) return;
 
-//     const container = containerRef.current;
-//     const clientHeight = container.clientHeight;
-//     const scrollTop = container.scrollTop;
+//     isScrolling.current = true;
+//     const targetScroll = currentIndex * container.clientHeight;
 
-//     // Calculate the target scroll position
-//     const targetIndex = Math.round(scrollTop / clientHeight);
-//     const targetScrollTop = targetIndex * clientHeight;
-
-//     // Smooth scroll to the target
 //     container.scrollTo({
-//       top: targetScrollTop,
+//       top: targetScroll,
 //       behavior: "smooth",
 //     });
-//   };
 
-//   const handleVisitStore = (item) => {
-//     // Navigate to store page - adjust based on your routing structure
-//     console.log("Visit store for:", item.foodPartner?.name || item.foodPartner);
-//     // You can navigate here if needed: navigate(`/store/${item.foodPartner._id}`)
-//   };
+//     const timer = setTimeout(() => {
+//       isScrolling.current = false;
+//     }, 600);
 
-//   if (!items || items.length === 0) {
-//     return (
-//       <div className="reels-empty">
-//         <p>{emptyMessage || "No reels available"}</p>
-//       </div>
-//     );
-//   }
+//     return () => clearTimeout(timer);
+//   }, [currentIndex]);
+
+//   const handleVisitStore = (storeId) => {
+//     console.log("Visit store:", storeId);
+//     // Navigate to store or open store details
+//   };
 
 //   return (
-//     <div
-//       className="reels-container"
-//       ref={containerRef}
-//       onScroll={handleScroll}
-//     >
-//       {items.map((item, index) => (
-//         <div key={item._id || index} className="reel">
-//           <video
-//             ref={(el) => {
-//               if (el) videoRefs.current[item._id || index] = el;
-//             }}
-//             className="reel-video"
-//             src={item.videoUrl}
-//             loop
-//             muted
-//             playsInline
-//           />
+//     <div className="reel-feed-container">
+//       <div
+//         className="reel-scroll-container"
+//         ref={scrollContainerRef}
+//         onScroll={handleScroll}
+//       >
+//         {mockVideos.map((video) => (
+//           <div key={video.id} className="reel-item">
+//             <video
+//               className="reel-video"
+//               autoPlay={mockVideos.indexOf(video) === currentIndex}
+//               loop
+//               muted
+//               playsInline
+//             >
+//               <source src={video.videoUrl} type="video/mp4" />
+//               Your browser does not support the video tag.
+//             </video>
 
-//           {/* Gradient overlay for text readability */}
-//           <div className="reel-gradient-overlay" />
-
-//           {/* Content overlay - positioned at top */}
-//           <div className="reel-overlay">
-//             <div className="reel-content">
-//               <p className="reel-description">{item.description}</p>
-//               <button
-//                 className="reel-button"
-//                 onClick={() => handleVisitStore(item)}
-//               >
-//                 Visit Store
-//               </button>
+//             {/* Overlay: Description and Button */}
+//             <div className="reel-overlay">
+//               <div className="reel-content">
+//                 <p className="reel-description">{video.description}</p>
+//                 <button
+//                   className="visit-store-btn"
+//                   onClick={() => handleVisitStore(video.storeId)}
+//                 >
+//                   Visit Store
+//                 </button>
+//               </div>
 //             </div>
 //           </div>
+//         ))}
+//       </div>
 
-//           {/* Food partner info */}
-//           <div className="reel-footer">
-//             <p className="reel-partner-name">
-//               {item.foodPartner?.name || "Store"}
-//             </p>
-//           </div>
-//         </div>
-//       ))}
+//       {/* Indicators */}
+//       <div className="reel-indicators">
+//         {mockVideos.map((_, index) => (
+//           <div
+//             key={index}
+//             className={`indicator ${index === currentIndex ? "active" : ""}`}
+//             onClick={() => setCurrentIndex(index)}
+//           />
+//         ))}
+//       </div>
 //     </div>
 //   );
 // };
 
 // export default ReelFeed;
-
-
-
-
