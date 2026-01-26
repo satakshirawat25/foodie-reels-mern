@@ -31,23 +31,4 @@ Video Hosting	ImageKit (or any CDN)
 HTTP Client	Axios
 
 
-📁 Project Structure
-foodie-reels/
-│
-├─ backend/                  # Node.js + Express API
-│  ├─ controllers/           # Controllers for Food, User, Auth
-│  ├─ models/                # Mongoose schemas
-│  ├─ routes/                # API routes
-│  ├─ middlewares/           # Auth and error handling middleware
-│  └─ server.js              # Backend server entry
-│
-├─ frontend/                 # React client
-│  ├─ src/
-│  │  ├─ components/         # Reusable UI components
-│  │  ├─ pages/              # Home, Profile, Login, Signup
-│  │  ├─ styles/             # CSS files
-│  │  └─ App.jsx             # React app entry
-│
-├─ package.json              # Project dependencies
-└─ README.md                 # Project documentation
 
