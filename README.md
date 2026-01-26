@@ -31,6 +31,7 @@ Video Hosting	ImageKit (or any CDN)
 HTTP Client	Axios
 
 
+📁 Project Structure
 foodie-reels/
 │
 ├─ backend/                  # Node.js + Express API
@@ -49,3 +50,4 @@ foodie-reels/
 │
 ├─ package.json              # Project dependencies
 └─ README.md                 # Project documentation
+
