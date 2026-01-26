@@ -19,9 +19,25 @@ router.post(
 
 //get
 router.get("/",
-   authMiddleware.authUserMiddleware,
-  foodController.getFoodItems);
+  authMiddleware.authUserMiddleware,
+   foodController.getFoodItems);
 
-  
+router.post(
+  "/like",
+  authMiddleware.authUserMiddleware,
+  foodController.likeFood
+);
+
+router.post(
+  "/save",
+  authMiddleware.authUserMiddleware,
+  foodController.saveFood
+);
+
+router.get(
+  "/save",
+  authMiddleware.authUserMiddleware,
+  foodController.getSaveFood
+);
 
 export default router;

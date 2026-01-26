@@ -1,0 +1,332 @@
+@import "./theme.css";
+
+/* Reel Feed Wrapper */
+.reel-feed-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Main Container */
+.reel-feed-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Scroll Container with Snap */
+.reel-scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-padding: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Hide scrollbar */
+.reel-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.reel-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Individual Reel Item */
+.reel-item {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Video Header */
+.video-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: var(--spacing-lg);
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video Element */
+.reel-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #000;
+}
+
+/* Engagement Panel - Right Side */
+.engagement-panel {
+  position: absolute;
+  right: var(--spacing-lg);
+  bottom: 180px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* Engagement Button */
+.engagement-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: none;
+  border: 2px solid transparent;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--bg-primary);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-full);
+}
+
+.engagement-btn svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all var(--transition-base);
+}
+
+.engagement-btn:hover svg {
+  transform: scale(1.15);
+}
+
+.engagement-btn.active svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.engagement-btn.like-btn.active {
+  color: var(--error-color);
+}
+
+.engagement-btn.save-btn.active {
+  color: var(--primary-color);
+}
+
+.engagement-btn.share-btn:active,
+.engagement-btn.share-btn:hover {
+  color: var(--primary-color);
+}
+
+/* Engagement Count Label */
+.engagement-count {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Overlay Container - Bottom */
+.reel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95),
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.4),
+    transparent
+  );
+  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg)
+    var(--spacing-lg);
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Content Wrapper */
+.reel-content {
+  display: flex;
+  flex-direction: column;
+  padding-right: 4.5rem;
+  gap: var(--spacing-md);
+}
+
+/* Description Text */
+.reel-description {
+  color: var(--bg-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Visit Store Button */
+.visit-store-btn {
+  background: transparent;
+  color: var(--bg-primary);
+  border: 2px solid var(--bg-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  width: fit-content;
+  min-width: 130px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.visit-store-btn:hover {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.visit-store-btn:active {
+  transform: translateY(0);
+}
+
+/* Old Page Container (deprecated) */
+.reels-page {
+  height: 100dvh;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.reels-feed {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.reel {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  scroll-snap-align: start;
+  background: #000;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .engagement-panel {
+    right: var(--spacing-md);
+    bottom: 140px;
+    gap: var(--spacing-lg);
+  }
+
+  .engagement-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .engagement-count {
+    font-size: var(--font-size-xs);
+  }
+
+  .reel-overlay {
+    padding-right: 60px;
+  }
+
+  .reel-description {
+    font-size: var(--font-size-sm);
+    -webkit-line-clamp: 2;
+  }
+
+  .visit-store-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-width: 110px;
+  }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .reel-feed-wrapper {
+    background-color: var(--bg-primary);
+  }
+
+  .video-header {
+    color: var(--text-primary);
+  }
+
+  .engagement-btn {
+    color: var(--bg-primary);
+  }
+
+  .reel-description {
+    color: var(--bg-primary);
+  }
+
+  .visit-store-btn {
+    border-color: var(--bg-primary);
+    color: var(--bg-primary);
+  }
+
+  .visit-store-btn:hover {
+    background-color: var(--bg-primary);
+    color: var(--bg-secondary);
+  }
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.05) 30%,
+    rgba(0, 0, 0, 0.35) 65%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* Bottom Navigation Styles (will be added in BottomNav component) */
